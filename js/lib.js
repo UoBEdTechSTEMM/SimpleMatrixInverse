@@ -275,8 +275,6 @@ var matrix = matrix || {};
       var toTest = new mt.Matrix(Number($('#matrixElemA').val()), Number($('#matrixElemB').val()),
         Number($('#matrixElemC').val()), Number($('#matrixElemD').val()))
 
-      console.log(inverseMatrix)
-
       // Check if the correct matrix was entered
       if (toTest.equals(inverseMatrix, 3) === true) {
         $('#result').text('Correct!')
@@ -290,13 +288,14 @@ var matrix = matrix || {};
 
     // Apply inverse as animation, so they can see if it worked
     $('#animate').click(function () {
-      var numSteps = 100
+      var numSteps = 50
       var currentMatrix = mt.IdentityMatrix()
       var transformedVertices = []
       var scaledVertices
       var vertices
-      var infinitesimalMatrix = new mt.Matrix((lastTestedInverseMatrix.a - 1) / numSteps,
-        lastTestedInverseMatrix.b / numSteps, lastTestedInverseMatrix.c / numSteps, (lastTestedInverseMatrix.d - 1) / numSteps)
+      // var infinitesimalMatrix = new mt.Matrix((lastTestedInverseMatrix.a - 1) / numSteps,
+      //   lastTestedInverseMatrix.b / numSteps, lastTestedInverseMatrix.c / numSteps, (lastTestedInverseMatrix.d - 1) / numSteps)
+      var inv = lastTestedInverseMatrix
 
       // Generate the untransformed shape
       if (currentShape === 'Triangle') {
@@ -305,10 +304,42 @@ var matrix = matrix || {};
         vertices = [new mt.Point(0, 0), new mt.Point(1, 0), new mt.Point(1, 1), new mt.Point(0, 1)]
       }
 
-      // Main update loop
+      // http://math.stackexchange.com/questions/861674/decompose-a-2d-arbitrary-transform-into-only-scaling-and-rotation
+      var E = (inv.a + inv.d) / 2
+      var F = (inv.a - inv.d) / 2
+      var G = (inv.c + inv.b) / 2
+      var H = (inv.c - inv.b) / 2
+      var Q = Math.sqrt(Math.pow(E, 2) + Math.pow(H, 2))
+      var R = Math.sqrt(Math.pow(F, 2) + Math.pow(G, 2))
+      var sx = Q + R
+      var sy = Q - R
+      var a1 = Math.atan2(G, F)
+      var a2 = Math.atan2(H, E)
+      var theta = -(a2 - a1) / 2
+      var phi = -(a2 + a1) / 2
+
+      var firstRotation = new mt.Matrix(Math.cos(theta), Math.sin(theta), -Math.sin(theta), Math.cos(theta))
+      var scale = new mt.Matrix(sx, 0, 0, sy)
+      var secondRotation = new mt.Matrix(Math.cos(phi), Math.sin(phi), -Math.sin(phi), Math.cos(phi))
+
+      var stage = 0
+      var angle = 0
+      var currScaleX = 1
+      var currScaleY = 1;
+
       (function update () {
         // Progress the animation slightly
-        currentMatrix = currentMatrix.add(infinitesimalMatrix)
+        if (stage === 0) {
+          angle += theta / numSteps
+          currentMatrix = new mt.Matrix(Math.cos(angle), Math.sin(angle), -Math.sin(angle), Math.cos(angle))
+        } else if (stage === 1) {
+          currScaleX += (sx - 1) / numSteps
+          currScaleY += (sy - 1) / numSteps
+          currentMatrix = (new mt.Matrix(currScaleX, 0, 0, currScaleY)).multiplyRight(firstRotation)
+        } else if (stage === 2) {
+          angle += phi / numSteps
+          currentMatrix = (new mt.Matrix(Math.cos(angle), Math.sin(angle), -Math.sin(angle), Math.cos(angle))).multiplyRight(scale).multiplyRight(firstRotation)
+        }
 
         two.clear()
         grid.draw(two)
@@ -333,7 +364,15 @@ var matrix = matrix || {};
         // Update screen
         two.update()
 
-        if (currentMatrix.equals(inverseMatrix)) {
+        // Check if we are at the end of an animation stage
+        if (currentMatrix.equals(firstRotation)) {
+          stage++
+          currentMatrix = mt.IdentityMatrix()
+        } else if (currentMatrix.equals(scale.multiplyRight(firstRotation))) {
+          stage++
+          currentMatrix = mt.IdentityMatrix()
+          angle = 0
+        } else if (currentMatrix.equals(secondRotation.multiplyRight(scale.multiplyRight(firstRotation)), 2)) {
           return
         }
 
