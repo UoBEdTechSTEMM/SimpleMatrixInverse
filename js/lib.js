@@ -372,7 +372,7 @@ var matrix = matrix || {};
           stage++
           currentMatrix = mt.IdentityMatrix()
           angle = 0
-        } else if (currentMatrix.equals(secondRotation.multiplyRight(scale.multiplyRight(firstRotation)), 2)) {
+        } else if (currentMatrix.equals(secondRotation.multiplyRight(scale.multiplyRight(firstRotation)))) {
           return
         }
 
