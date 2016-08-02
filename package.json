@@ -24,7 +24,8 @@
       "$",
       "Two",
       "matrix",
-      "MathJax"
+      "MathJax",
+      "requestAnimationFrame"
     ]
   }
 }

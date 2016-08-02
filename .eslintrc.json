@@ -9,6 +9,7 @@
       "$": true,
       "Two": true,
       "matrix": true,
-      "MathJax": true
+      "MathJax": true,
+      "requestAnimationFrame": true
     }
 }

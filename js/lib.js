@@ -37,6 +37,10 @@ var matrix = matrix || {};
     return new mt.Matrix(this.a + m.a, this.b + m.b, this.c + m.c, this.d + m.d)
   }
 
+  mt.Matrix.prototype.multiplyScalar = function (scalar) {
+    return new mt.Matrix(scalar * this.a, scalar * this.b, scalar * this.c, scalar * this.d)
+  }
+
   mt.Matrix.prototype.multiplyRight = function (m) {
     return new mt.Matrix(this.a * m.a + this.b * m.c, this.a * m.b + this.b * m.d,
                          this.c * m.a + this.d * m.c, this.c * m.b + this.d * m.d)
@@ -199,15 +203,15 @@ var matrix = matrix || {};
 
     // Create the grid
     var grid = new mt.Grid(rect, { numTicks: numTicks })
-    var vertices
-    var scaledVertices
 
     // Num decimal places to truncate to
-    var decimalPlaces = 3
+    // var decimalPlaces = 3
 
     // Store both matrices (for swapping them using the swap button)
     var matrix
     var inverseMatrix
+    var lastTestedInverseMatrix
+    var originalMatrix
 
     // Current shape to draw
     var currentShape = 'Triangle'
@@ -215,7 +219,8 @@ var matrix = matrix || {};
     // Called whenever display is to be updated
     function updateDisplay () {
       var transformedVertices
-      var res
+      var scaledVertices
+      var vertices
 
       // Clear the screen and draw initial stuff
       two.clear()
@@ -245,12 +250,6 @@ var matrix = matrix || {};
       scaledVertices = grid.scalePoints(transformedVertices)
       mt.drawPath(two, scaledVertices, '#DAF791', '#A1D916')
 
-      // Calculate and display the inverse
-      res = matrix.getInverse()
-
-      // Re-render LaTeX
-      MathJax.Hub.Queue(['Typeset', MathJax.Hub, 'MatrixTransformations'])
-
       // Update screen
       two.update()
     }
@@ -258,6 +257,12 @@ var matrix = matrix || {};
     // Add event handler for shape selection drop-down list
     $('#shapeSelect').change(function () {
       currentShape = $('#shapeSelect option:selected').text()
+      updateDisplay()
+    })
+
+    // Reset the transformation matrix
+    $('#reset').click(function () {
+      matrix = originalMatrix
       updateDisplay()
     })
 
@@ -270,9 +275,6 @@ var matrix = matrix || {};
       var toTest = new mt.Matrix(Number($('#matrixElemA').val()), Number($('#matrixElemB').val()),
         Number($('#matrixElemC').val()), Number($('#matrixElemD').val()))
 
-      // Apply the matrix they've entered so they can see if it worked
-      matrix = matrix.multiplyLeft(toTest)
-
       console.log(inverseMatrix)
 
       // Check if the correct matrix was entered
@@ -282,13 +284,67 @@ var matrix = matrix || {};
         $('#result').text('Incorrect')
       }
 
-      updateDisplay()
+      // Store it
+      lastTestedInverseMatrix = toTest
+    })
+
+    // Apply inverse as animation, so they can see if it worked
+    $('#animate').click(function () {
+      var numSteps = 100
+      var currentMatrix = mt.IdentityMatrix()
+      var transformedVertices = []
+      var scaledVertices
+      var vertices
+      var infinitesimalMatrix = new mt.Matrix((lastTestedInverseMatrix.a - 1) / numSteps,
+        lastTestedInverseMatrix.b / numSteps, lastTestedInverseMatrix.c / numSteps, (lastTestedInverseMatrix.d - 1) / numSteps)
+
+      // Generate the untransformed shape
+      if (currentShape === 'Triangle') {
+        vertices = [new mt.Point(0, 0), new mt.Point(1, 0), new mt.Point(1, 1)]
+      } else if (currentShape === 'Square') {
+        vertices = [new mt.Point(0, 0), new mt.Point(1, 0), new mt.Point(1, 1), new mt.Point(0, 1)]
+      }
+
+      // Main update loop
+      (function update () {
+        // Progress the animation slightly
+        currentMatrix = currentMatrix.add(infinitesimalMatrix)
+
+        two.clear()
+        grid.draw(two)
+
+        // Transform to screen coordinates and draw the untransformed shape
+        scaledVertices = grid.scalePoints(vertices)
+        mt.drawPath(two, scaledVertices, '#FF9E96', '#F45346')
+
+        // Apply transformation and then inverse matrix to each vertex (in grid space)
+        for (var i = 0; i < vertices.length; i++) {
+          transformedVertices.push(vertices[i].applyMatrix(originalMatrix).applyMatrix(currentMatrix))
+        }
+
+        // Transform to screen coordinates and draw the transformed shape
+        scaledVertices = grid.scalePoints(transformedVertices)
+        mt.drawPath(two, scaledVertices, '#DAF791', '#A1D916')
+
+        // Clear all the vertices
+        scaledVertices = []
+        transformedVertices = []
+
+        // Update screen
+        two.update()
+
+        if (currentMatrix.equals(inverseMatrix)) {
+          return
+        }
+
+        requestAnimationFrame(update)
+      })()
     })
 
     // Generate a matrix to find the inverse of
     $(function () {
-      function getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min)) + min;
+      function getRandomInt (min, max) {
+        return Math.floor(Math.random() * (max - min)) + min
       }
 
       matrix = new mt.Matrix(getRandomInt(-4, 4), getRandomInt(-4, 4), getRandomInt(-4, 4), getRandomInt(-4, 4))
