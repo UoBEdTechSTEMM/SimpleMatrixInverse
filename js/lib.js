@@ -50,6 +50,19 @@ var matrix = matrix || {};
     return '[[' + this.a + ', ' + this.b + '], [' + this.c + ', ' + this.d + ']]'
   }
 
+  /* @param{m} matrix to check this is equal to
+   * @param{precision} number of sig figs to check to */
+  mt.Matrix.prototype.equals = function (m, precision) {
+    if (precision === undefined) {
+      precision = 3
+    }
+
+    return this.a.toPrecision(precision) === m.a.toPrecision(precision) &&
+           this.b.toPrecision(precision) === m.b.toPrecision(precision) &&
+           this.c.toPrecision(precision) === m.c.toPrecision(precision) &&
+           this.d.toPrecision(precision) === m.d.toPrecision(precision)
+  }
+
   mt.Point = function (x, y) {
     this.x = x
     this.y = y
@@ -248,6 +261,33 @@ var matrix = matrix || {};
       updateDisplay()
     })
 
+    // Reset the transformation matrix to initial
+    $('#reset').click(function () {
+      matrix = originalMatrix
+      updateDisplay()
+    })
+
+    // Test that the entered inverse is correct
+    $('#test').click(function () {
+      // Get the matrix elements from page
+      var toTest = new mt.Matrix(Number($('#matrixElemA').val()), Number($('#matrixElemB').val()),
+        Number($('#matrixElemC').val()), Number($('#matrixElemD').val()))
+
+      // Apply the matrix they've entered so they can see if it worked
+      matrix = matrix.multiplyLeft(toTest)
+
+      console.log(inverseMatrix)
+
+      // Check if the correct matrix was entered
+      if (toTest.equals(inverseMatrix, 3) === true) {
+        $('#result').text('Correct!')
+      } else {
+        $('#result').text('Incorrect')
+      }
+
+      updateDisplay()
+    })
+
     // Generate a matrix to find the inverse of
     $(function () {
       function getRandomInt(min, max) {
@@ -260,6 +300,9 @@ var matrix = matrix || {};
       while (matrix.getDeterminant() === 0) {
         matrix = new mt.Matrix(getRandomInt(-4, 4), getRandomInt(-4, 4), getRandomInt(-4, 4), getRandomInt(-4, 4))
       }
+
+      // Save the original matrix
+      originalMatrix = matrix
 
       $('#toFindInverseOf').append('\\[\\begin{pmatrix} ' + matrix.a +
         '&' + matrix.b + '\\\\' + matrix.c + '&' + matrix.d + '\\end{pmatrix} \\]')
