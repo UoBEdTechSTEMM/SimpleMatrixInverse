@@ -298,6 +298,7 @@ var matrix = matrix || {};
       }
 
       // http://math.stackexchange.com/questions/861674/decompose-a-2d-arbitrary-transform-into-only-scaling-and-rotation
+      // Variables used in the decomposition
       var E = (inv.a + inv.d) / 2
       var F = (inv.a - inv.d) / 2
       var G = (inv.c + inv.b) / 2
@@ -311,14 +312,15 @@ var matrix = matrix || {};
       var theta = -(a2 - a1) / 2
       var phi = -(a2 + a1) / 2
 
+      // The matrix for each part of the decomposition
       var firstRotation = new mt.Matrix(Math.cos(theta), Math.sin(theta), -Math.sin(theta), Math.cos(theta))
       var scale = new mt.Matrix(sx, 0, 0, sy)
       var secondRotation = new mt.Matrix(Math.cos(phi), Math.sin(phi), -Math.sin(phi), Math.cos(phi))
 
-      var stage = 0
-      var angle = 0
-      var currScaleX = 1
-      var currScaleY = 1;
+      var stage = 0 // Which of the above matrices are we transforming?
+      var angle = 0 // Angle of the current rotation matrix
+      var currScaleX = 1  // Current x scaling of the scaling matrix
+      var currScaleY = 1; // Current y scaling of the scaling matrix
 
       (function update () {
         // Progress the animation slightly

@@ -17,3 +17,7 @@ Simplified version of [Matrix Transforms](https://github.com/UoBEdTechSTEMM/Matr
 * ~~Animate the matrix transformation steps~~
 
 * Handle answers to 3 sig figs
+
+* Add color legend into main paragraph
+
+* Apply forward animation first before inverse
