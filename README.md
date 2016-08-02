@@ -14,4 +14,4 @@ Simplified version of [Matrix Transforms](https://github.com/UoBEdTechSTEMM/Matr
 
 * ~~Test that inverse is correct~~
 
-* Animate the matrix transformation steps
+* ~~Animate the matrix transformation steps~~
