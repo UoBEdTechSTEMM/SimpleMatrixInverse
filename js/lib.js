@@ -380,6 +380,13 @@ var matrix = matrix || {};
       })()
     })
 
+    $('#debugInverse').click(function () {
+      $('#matrixElemA').val(inverseMatrix.a)
+      $('#matrixElemB').val(inverseMatrix.b)
+      $('#matrixElemC').val(inverseMatrix.c)
+      $('#matrixElemD').val(inverseMatrix.d)
+    })
+
     // Generate a matrix to find the inverse of
     $(function () {
       function getRandomInt (min, max) {
