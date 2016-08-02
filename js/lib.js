@@ -261,14 +261,11 @@ var matrix = matrix || {};
       updateDisplay()
     })
 
-    // Reset the transformation matrix to initial
-    $('#reset').click(function () {
-      matrix = originalMatrix
-      updateDisplay()
-    })
-
     // Test that the entered inverse is correct
     $('#test').click(function () {
+      // Reset to the original transformation matrix
+      matrix = originalMatrix
+
       // Get the matrix elements from page
       var toTest = new mt.Matrix(Number($('#matrixElemA').val()), Number($('#matrixElemB').val()),
         Number($('#matrixElemC').val()), Number($('#matrixElemD').val()))

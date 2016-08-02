@@ -12,6 +12,6 @@ Simplified version of [Matrix Transforms](https://github.com/UoBEdTechSTEMM/Matr
 
 ## TODO
 
-* Test that inverse is correct
+* ~~Test that inverse is correct~~
 
 * Animate the matrix transformation steps

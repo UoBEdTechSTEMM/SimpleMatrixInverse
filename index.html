@@ -19,22 +19,32 @@
   <div id="hidePage" style="visibility:hidden">
 
   <h2>Matrix Transformations</h2>
-  <p>
+  <!-- <p>
     <select id="shapeSelect">
       <option value="1" selected>Triangle</option>
       <option value="2">Square</option>
     </select>
-  </p>
+  </p> -->
 
-  <p>Find the inverse of:
-    <div id="toFindInverseOf">
-
-    </div>
-
-    Entering answer to 3 sig figs
+  <p>
+    The graph below shows a triangle with the matrix below applied to it. In red
+    is the triangle before any transformation is applied, and in green is the
+    transformed triangle. Clicking the "Test Again" button will cause the
+    inverse matrix entered to then be applied. If the inverse matrix entered is
+    correct, the green triangle will be mapped perfectly back onto the red
+    triangle, since \(M M^{-1} = M^{-1} M = I\).
   </p>
 
   <p>
+    The transformation matrix to be applied
+
+    <div id="toFindInverseOf">
+    </div>
+  </p>
+
+  <p>
+    Enter your answer for the inverse to 3 significant figures
+
     <div id="inverseMatrix">
       \[
       \begin{pmatrix}
@@ -44,8 +54,7 @@
       \]
     </div>
 
-    <input type="button" id="reset" value="Reset">
-    <input type="button" id="test" value="Test">
+    <input type="button" id="test" value="Test Again">
 
     <span id="result"></span>
   </p>
