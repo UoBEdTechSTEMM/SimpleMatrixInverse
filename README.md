@@ -15,3 +15,5 @@ Simplified version of [Matrix Transforms](https://github.com/UoBEdTechSTEMM/Matr
 * ~~Test that inverse is correct~~
 
 * ~~Animate the matrix transformation steps~~
+
+* Handle answers to 3 sig figs

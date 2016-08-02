@@ -54,17 +54,10 @@ var matrix = matrix || {};
     return '[[' + this.a + ', ' + this.b + '], [' + this.c + ', ' + this.d + ']]'
   }
 
-  /* @param{m} matrix to check this is equal to
-   * @param{precision} number of sig figs to check to */
-  mt.Matrix.prototype.equals = function (m, precision) {
-    if (precision === undefined) {
-      precision = 3
-    }
-
-    return this.a.toPrecision(precision) === m.a.toPrecision(precision) &&
-           this.b.toPrecision(precision) === m.b.toPrecision(precision) &&
-           this.c.toPrecision(precision) === m.c.toPrecision(precision) &&
-           this.d.toPrecision(precision) === m.d.toPrecision(precision)
+  /* @param{m} matrix to check this is equal to */
+  mt.Matrix.prototype.equals = function (m) {
+    return (this.a - m.a) < 0.001 && (this.b - m.b) < 0.001 &&
+           (this.c - m.c) < 0.001 && (this.d - m.d) < 0.001
   }
 
   mt.Point = function (x, y) {
@@ -368,11 +361,11 @@ var matrix = matrix || {};
         if (currentMatrix.equals(firstRotation)) {
           stage++
           currentMatrix = mt.IdentityMatrix()
-        } else if (currentMatrix.equals(scale.multiplyRight(firstRotation))) {
+        } else if (stage === 1 && currentMatrix.equals(scale.multiplyRight(firstRotation))) {
           stage++
           currentMatrix = mt.IdentityMatrix()
           angle = 0
-        } else if (currentMatrix.equals(secondRotation.multiplyRight(scale.multiplyRight(firstRotation)))) {
+        } else if (stage === 2 && currentMatrix.equals(secondRotation.multiplyRight(scale.multiplyRight(firstRotation)))) {
           return
         }
 
