@@ -18,6 +18,8 @@ Simplified version of [Matrix Transforms](https://github.com/UoBEdTechSTEMM/Matr
 
 * Handle answers to 3 sig figs
 
-* Add color legend into main paragraph
+* ~~Add color legend into main paragraph~~
 
-* Apply forward animation first before inverse
+* ~~Apply forward animation first before inverse~~
+
+* ~~Show transformation equation~~

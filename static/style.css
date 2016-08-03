@@ -55,6 +55,14 @@ h2 {
   width: 2em;
 }
 
+.red {
+  color: #F45346
+}
+
+.green {
+  color: #A1D916
+}
+
 .preformatted {
   font-family: "Monaco", "Inconsolata", monospace;
 }

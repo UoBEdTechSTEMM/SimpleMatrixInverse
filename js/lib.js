@@ -19,6 +19,10 @@ var matrix = matrix || {};
     return new mt.Matrix(1, 0, 0, 1)
   }
 
+  mt.NullMatrix = function () {
+    return new mt.Matrix(0, 0, 0, 0)
+  }
+
   mt.Matrix.prototype.getDeterminant = function () {
     return this.a * this.d - this.b * this.c
   }
@@ -388,7 +392,34 @@ var matrix = matrix || {};
       $('#matrixElemB').val(inverseMatrix.b)
       $('#matrixElemC').val(inverseMatrix.c)
       $('#matrixElemD').val(inverseMatrix.d)
+
+      updateResultingMatrix()
     })
+
+    // Update resulting matrix by applying inverse to the transformation matrix
+    function updateResultingMatrix () {
+      var res
+      var toTest = new mt.Matrix(Number($('#matrixElemA').val()), Number($('#matrixElemB').val()),
+        Number($('#matrixElemC').val()), Number($('#matrixElemD').val()))
+
+      if (isNaN(toTest.a) || isNaN(toTest.b) || isNaN(toTest.c) || isNaN(toTest.d)) {
+        return
+      }
+
+      res = originalMatrix.multiplyRight(toTest)
+
+      // Update resulting matrix display
+      $('#resultingMatrix').text('\\(= \\begin{pmatrix} ' + res.a + ' & ' + res.b +
+        ' \\\\ ' + res.c + ' & ' + res.d + ' \\end{pmatrix} \\)')
+
+      MathJax.Hub.Queue(['Typeset', MathJax.Hub, 'MatrixTransformations'])
+    }
+
+    // Add event handler to update resulting matrix
+    $('#matrixElemA').on('input', updateResultingMatrix)
+    $('#matrixElemB').on('input', updateResultingMatrix)
+    $('#matrixElemC').on('input', updateResultingMatrix)
+    $('#matrixElemD').on('input', updateResultingMatrix)
 
     // Generate a matrix to find the inverse of
     $(function () {
@@ -406,11 +437,15 @@ var matrix = matrix || {};
       // Save the original matrix
       originalMatrix = matrix
 
-      $('#toFindInverseOf').append('\\[\\begin{pmatrix} ' + matrix.a +
-        '&' + matrix.b + '\\\\' + matrix.c + '&' + matrix.d + '\\end{pmatrix} \\]')
+      $('#toFindInverseOf').append('\\(\\begin{pmatrix} ' + matrix.a +
+        '&' + matrix.b + '\\\\' + matrix.c + '&' + matrix.d + '\\end{pmatrix}\\)')
 
       // Find inverse matrix
       inverseMatrix = matrix.getInverse().matrix
+      lastTestedInverseMatrix = mt.NullMatrix()
+
+      // Display resulting matrix
+      $('#resultingMatrix').text('\\(= \\begin{pmatrix} 0 & 0 \\\\ 0 & 0 \\end{pmatrix} \\)')
 
       // Re-render LaTeX
       MathJax.Hub.Queue(['Typeset', MathJax.Hub, 'MatrixTransformations'])

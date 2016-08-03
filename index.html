@@ -27,33 +27,41 @@
   </p> -->
 
   <p>
-    The graph below shows a triangle with the matrix below applied to it. In red
-    is the triangle before any transformation is applied, and in green is the
-    transformed triangle. Clicking the "Test Again" button will cause the
-    inverse matrix entered to then be applied. If the inverse matrix entered is
-    correct, the green triangle will be mapped perfectly back onto the red
-    triangle, since \(M M^{-1} = M^{-1} M = I\).
+
+    The graph below shows a triangle with the matrix below applied to it. In
+    <span class="red">red</span> is the triangle before any transformation is
+    applied, and in <span class="green">green</span> is triangle with each
+    vertex multiplied by the first matrix below. Clicking the "Test" button will
+    cause the inverse matrix entered to be applied. The app will play an
+    animation sequence, first applying the transformation matrix, and then the
+    inverse matrix. If the inverse matrix entered is correct, the <span
+    class="green">green</span> triangle will be mapped perfectly back onto the
+    <span class="red">red</span> triangle, since \(M M^{-1} = M^{-1} M = I\).
+
   </p>
 
   <p>
-    The transformation matrix to be applied
+    Enter your answer to within XXXXXX <br />
 
-    <div id="toFindInverseOf">
+    <div id="equation" class="center">
+      <span id="toFindInverseOf">
+      </span>
+
+      <span id="inverseMatrix">
+        \(
+        \begin{pmatrix}
+        \FormInput[][matrixInput][0]{matrixElemA} & \FormInput[][matrixInput][0]{matrixElemB} \\
+        \FormInput[][matrixInput][0]{matrixElemC} & \FormInput[][matrixInput][0]{matrixElemD}
+        \end{pmatrix}
+        \)
+      </span>
+
+      <span id="resultingMatrix">
+      </span>
     </div>
   </p>
 
   <p>
-    Enter your answer to within XXXXXX
-
-    <div id="inverseMatrix">
-      \[
-      \begin{pmatrix}
-      \FormInput[][matrixInput][0]{matrixElemA} & \FormInput[][matrixInput][0]{matrixElemB} \\
-      \FormInput[][matrixInput][0]{matrixElemC} & \FormInput[][matrixInput][0]{matrixElemD}
-      \end{pmatrix}
-      \]
-    </div>
-
     <input type="button" id="test" value="Test">
     <input type="button" id="debugInverse" value="DEBUG: Get Inverse">
 
