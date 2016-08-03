@@ -378,7 +378,8 @@ var matrix = matrix || {};
           angle = 0
         } else if (stage === 2 && currentMatrix.equals(secondRotation.multiplyRight(scale.multiplyRight(firstRotation)))) {
           if (finishCallback !== undefined) {
-            finishCallback()
+            // Pause, then start next animation
+            setTimeout(finishCallback, 1000)
           }
           return
         }
