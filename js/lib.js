@@ -60,8 +60,8 @@ var matrix = matrix || {};
 
   /* @param{m} matrix to check this is equal to */
   mt.Matrix.prototype.equals = function (m) {
-    return (this.a - m.a) < 0.001 && (this.b - m.b) < 0.001 &&
-           (this.c - m.c) < 0.001 && (this.d - m.d) < 0.001
+    return (this.a - m.a) < 0.00001 && (this.b - m.b) < 0.00001 &&
+           (this.c - m.c) < 0.00001 && (this.d - m.d) < 0.00001
   }
 
   mt.Point = function (x, y) {
@@ -267,7 +267,7 @@ var matrix = matrix || {};
         Number($('#matrixElemC').val()), Number($('#matrixElemD').val()))
 
       // Check if the correct matrix was entered
-      if (toTest.equals(inverseMatrix, 3) === true) {
+      if (toTest.equals(inverseMatrix) === true) {
         $('#result').text('Correct!')
       } else {
         $('#result').text('Incorrect')
@@ -408,6 +408,12 @@ var matrix = matrix || {};
 
       res = originalMatrix.multiplyRight(toTest)
 
+      // Round values to 2 decimal places
+      res.a = Math.round(res.a * 100) / 100
+      res.b = Math.round(res.b * 100) / 100
+      res.c = Math.round(res.c * 100) / 100
+      res.d = Math.round(res.d * 100) / 100
+
       // Update resulting matrix display
       $('#resultingMatrix').text('\\(= \\begin{pmatrix} ' + res.a + ' & ' + res.b +
         ' \\\\ ' + res.c + ' & ' + res.d + ' \\end{pmatrix} \\)')
@@ -444,7 +450,11 @@ var matrix = matrix || {};
       inverseMatrix = matrix.getInverse().matrix
       lastTestedInverseMatrix = mt.NullMatrix()
 
-      // Display resulting matrix
+      // Truncate correct inverse to 3 sig figs
+      inverseMatrix = new mt.Matrix(inverseMatrix.a.toPrecision(3), inverseMatrix.b.toPrecision(3),
+        inverseMatrix.c.toPrecision(3), inverseMatrix.d.toPrecision(3))
+
+      // Display (currently) null resulting matrix
       $('#resultingMatrix').text('\\(= \\begin{pmatrix} 0 & 0 \\\\ 0 & 0 \\end{pmatrix} \\)')
 
       // Re-render LaTeX
