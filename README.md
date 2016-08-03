@@ -12,6 +12,8 @@ Simplified version of [Matrix Transforms](https://github.com/UoBEdTechSTEMM/Matr
 
 ## TODO
 
+* Align text inputs on Maple TA HTML question
+
 * ~~Test that inverse is correct~~
 
 * ~~Animate the matrix transformation steps~~

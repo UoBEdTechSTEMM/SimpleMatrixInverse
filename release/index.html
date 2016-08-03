@@ -3,21 +3,9 @@
 <head>
   <meta charset="utf-8">
   <title>Matrix Inverses</title>
-  <link rel="stylesheet" type="text/css" href="static/style.css">
-
-  <!-- TeX Rendering -->
-  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-  <script type="text/javascript" src="static/forminput.js"></script>
 </head>
 
 <body>
-  <!-- For DOM manipulation -->
-  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-  <!-- For drawing 2D graphics -->
-  <script type="text/javascript" src="bower_components/two.js/build/two.js"></script>
-
-  <div id="hidePage" style="visibility:hidden">
-
   <h2>Matrix Inverses</h2>
   <!-- <p>
     <select id="shapeSelect">
@@ -48,12 +36,14 @@
       </span>
 
       <span id="inverseMatrix">
-        \(
+        <input type="text" id="matrixElemA"><input type="text" id="matrixElemB"> <br />
+        <input type="text" id="matrixElemC"><input type="text" id="matrixElemD">
+        <!-- \(
         \begin{pmatrix}
         \FormInput[][matrixInput][0]{matrixElemA} & \FormInput[][matrixInput][0]{matrixElemB} \\
         \FormInput[][matrixInput][0]{matrixElemC} & \FormInput[][matrixInput][0]{matrixElemD}
         \end{pmatrix}
-        \)
+        \) -->
       </span>
 
       <span id="resultingMatrix">
@@ -69,9 +59,6 @@
   </p>
 
   <div id="canvasContainer"></div>
-
-  <script type="text/javascript" src="js/lib.js"></script>
-  <script type="text/javascript" src="js/app.js"></script>
 </body>
 
 </html>
