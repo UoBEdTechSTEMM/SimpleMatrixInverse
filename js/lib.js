@@ -360,7 +360,7 @@ var matrix = matrix || {};
         two.update()
 
         // Check if we are at the end of an animation stage
-        if (currentMatrix.equals(firstRotation)) {
+        if (stage === 0 && currentMatrix.equals(firstRotation)) {
           stage++
           currentMatrix = mt.IdentityMatrix()
         } else if (stage === 1 && currentMatrix.equals(scale.multiplyRight(firstRotation))) {
