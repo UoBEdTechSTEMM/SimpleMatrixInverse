@@ -60,8 +60,8 @@ var matrix = matrix || {};
 
   /* @param{m} matrix to check this is equal to */
   mt.Matrix.prototype.equals = function (m) {
-    return (this.a - m.a) < 0.00001 && (this.b - m.b) < 0.00001 &&
-           (this.c - m.c) < 0.00001 && (this.d - m.d) < 0.00001
+    return Math.abs(this.a - m.a) < 0.000000001 && Math.abs(this.b - m.b) < 0.000000001 &&
+           Math.abs(this.c - m.c) < 0.000000001 && Math.abs(this.d - m.d) < 0.000000001
   }
 
   mt.Point = function (x, y) {
@@ -389,8 +389,10 @@ var matrix = matrix || {};
           if (finishCallback !== undefined) {
             // Pause, then start next animation
             setTimeout(finishCallback, 1000)
+          } else {
+            // If there is no further callback, stop playing
+            playing = false
           }
-          playing = false
           return
         }
 
