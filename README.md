@@ -16,7 +16,7 @@ Simplified version of [Matrix Transforms](https://github.com/UoBEdTechSTEMM/Matr
 
 * ~~Animate the matrix transformation steps~~
 
-* Handle answers to 3 sig figs
+* ~~Handle answers to 3 sig figs~~
 
 * ~~Add color legend into main paragraph~~
 
