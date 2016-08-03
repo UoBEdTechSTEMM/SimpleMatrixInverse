@@ -213,6 +213,9 @@ var matrix = matrix || {};
     // Current shape to draw
     var currentShape = 'Triangle'
 
+    // Whether or not an animation is playing
+    var playing = false
+
     // Called whenever display is to be updated
     function updateDisplay () {
       var transformedVertices
@@ -276,8 +279,11 @@ var matrix = matrix || {};
       // Store it
       lastTestedInverseMatrix = toTest
 
-      // Test with the animation
-      animate(true, animate.bind(this, false))
+      // Only play animation if it is not currently playing
+      if (playing === false) {
+        // Test with the animation
+        animate(true, animate.bind(this, false))
+      }
     })
 
     // Apply inverse as animation, so they can see if it worked
@@ -288,6 +294,9 @@ var matrix = matrix || {};
       var scaledVertices
       var vertices
       var inv
+
+      // Set playing flag to true
+      playing = true
 
       if (forward === true) {
         inv = originalMatrix
@@ -381,6 +390,7 @@ var matrix = matrix || {};
             // Pause, then start next animation
             setTimeout(finishCallback, 1000)
           }
+          playing = false
           return
         }
 
