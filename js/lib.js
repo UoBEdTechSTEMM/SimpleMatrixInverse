@@ -253,12 +253,6 @@ var matrix = matrix || {};
       updateDisplay()
     })
 
-    // Reset the transformation matrix
-    $('#reset').click(function () {
-      matrix = originalMatrix
-      updateDisplay()
-    })
-
     // Test that the entered inverse is correct
     $('#test').click(function () {
       // Reset to the original transformation matrix
@@ -277,18 +271,25 @@ var matrix = matrix || {};
 
       // Store it
       lastTestedInverseMatrix = toTest
+
+      // Test with the animation
+      animate(true, animate.bind(this, false))
     })
 
     // Apply inverse as animation, so they can see if it worked
-    $('#animate').click(function () {
+    function animate (forward, finishCallback) {
       var numSteps = 50
       var currentMatrix = mt.IdentityMatrix()
       var transformedVertices = []
       var scaledVertices
       var vertices
-      // var infinitesimalMatrix = new mt.Matrix((lastTestedInverseMatrix.a - 1) / numSteps,
-      //   lastTestedInverseMatrix.b / numSteps, lastTestedInverseMatrix.c / numSteps, (lastTestedInverseMatrix.d - 1) / numSteps)
-      var inv = lastTestedInverseMatrix
+      var inv
+
+      if (forward === true) {
+        inv = originalMatrix
+      } else {
+        inv = lastTestedInverseMatrix
+      }
 
       // Generate the untransformed shape
       if (currentShape === 'Triangle') {
@@ -345,7 +346,11 @@ var matrix = matrix || {};
 
         // Apply transformation and then inverse matrix to each vertex (in grid space)
         for (var i = 0; i < vertices.length; i++) {
-          transformedVertices.push(vertices[i].applyMatrix(originalMatrix).applyMatrix(currentMatrix))
+          if (forward === true) {
+            transformedVertices.push(vertices[i].applyMatrix(currentMatrix))
+          } else {
+            transformedVertices.push(vertices[i].applyMatrix(originalMatrix).applyMatrix(currentMatrix))
+          }
         }
 
         // Transform to screen coordinates and draw the transformed shape
@@ -368,12 +373,15 @@ var matrix = matrix || {};
           currentMatrix = mt.IdentityMatrix()
           angle = 0
         } else if (stage === 2 && currentMatrix.equals(secondRotation.multiplyRight(scale.multiplyRight(firstRotation)))) {
+          if (finishCallback !== undefined) {
+            finishCallback()
+          }
           return
         }
 
         requestAnimationFrame(update)
       })()
-    })
+    }
 
     $('#debugInverse').click(function () {
       $('#matrixElemA').val(inverseMatrix.a)
