@@ -191,7 +191,7 @@ var matrix = matrix || {};
 
   // The main application closure
   mt.runApp = function (canvasElem) {
-    var two = new Two({ width: 600, height: 600 }).appendTo(canvasElem)
+    var two = new Two({ width: 500, height: 500 }).appendTo(canvasElem)
 
     // Bounding rectangle for the grid
     var pad = 10
