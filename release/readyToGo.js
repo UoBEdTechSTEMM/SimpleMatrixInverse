@@ -1,5 +1,9 @@
+/* eslint-disable */
+
+var matrix = {};
+
 function initialize (interactiveMode) {
-  jQuery.getScript('https://cdnjs.cloudflare.com/ajax/libs/two.js/0.6.0/two.min.js', run)
+  jQuery.getScript('https://cdnjs.cloudflare.com/ajax/libs/two.js/0.6.0/two.min.js', run);
 
   function run () {
     /* Replace with minified code */
@@ -11,8 +15,6 @@ function setFeedback (response, answer) {
   be rendered.
   response: 	student's response of question.
   answer: 	correct answer of question.*/
-  /* Your code starts from here:*/
-
 };
 
 function getResponse () {
@@ -20,6 +22,11 @@ function getResponse () {
   to retrieve back student's response.*/
   /* Your code starts from here:*/
 
+  if (matrix.testAnswer() === true) {
+    return 1;
+  } else {
+    return 0;
+  }
 };
 
 /* Additional functions start from here*/
