@@ -368,7 +368,12 @@ var matrix = matrix || {};
 
         // Transform to screen coordinates and draw the transformed shape
         scaledVertices = grid.scalePoints(transformedVertices)
-        mt.drawPath(two, scaledVertices, '#DAF791', '#A1D916')
+
+        if (forward === true) {
+          mt.drawPath(two, scaledVertices, '#DAF791', '#A1D916')
+        } else {
+          mt.drawPath(two, scaledVertices, '#A983D4', '#571B9C')
+        }
 
         // Clear all the vertices
         scaledVertices = []
@@ -388,7 +393,7 @@ var matrix = matrix || {};
         } else if (stage === 2 && currentMatrix.equals(secondRotation.multiplyRight(scale.multiplyRight(firstRotation)))) {
           if (finishCallback !== undefined) {
             // Pause, then start next animation
-            setTimeout(finishCallback, 1000)
+            setTimeout(finishCallback, 2000)
           } else {
             // If there is no further callback, stop playing
             playing = false
