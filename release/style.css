@@ -1,6 +1,9 @@
 /* http://jgthms.com/web-design-in-4-minutes */
 
 body {
+  margin: 0 auto;
+  max-width: 50em;
+  
   line-height: 1.5;
 
   font-family: "Helvetica", "Arial", sans-serif;
