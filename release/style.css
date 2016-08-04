@@ -3,7 +3,9 @@
 body {
   margin: 0 auto;
   max-width: 50em;
-  
+
+  width: 700px; /* FOR MOBIUS */
+
   line-height: 1.5;
 
   font-family: "Helvetica", "Arial", sans-serif;
