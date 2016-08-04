@@ -43,7 +43,8 @@ h2 {
 
 .matrixInput, .matrixOutput {
   font-family: "Monaco", "Inconsolata", monospace;
-  margin: 0.5em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
   width: 5em;
 }
 

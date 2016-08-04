@@ -260,19 +260,6 @@ var matrix = matrix || {};
       updateDisplay()
     })
 
-    // mt.testAnswer = function () {
-    //   // Get the matrix elements from page
-    //   var toTest = new mt.Matrix(Number($('#matrixElemA').val()), Number($('#matrixElemB').val()),
-    //     Number($('#matrixElemC').val()), Number($('#matrixElemD').val()))
-    //
-    //   // Check if the correct matrix was entered
-    //   if (toTest.equals(inverseMatrix) === true) {
-    //     return true
-    //   } else {
-    //     return false
-    //   }
-    // }
-
     // Test that the entered inverse is correct
     $('#test').click(function () {
       // Reset to the original transformation matrix
@@ -284,6 +271,13 @@ var matrix = matrix || {};
 
       // Store the entered matrix
       lastTestedInverseMatrix = toTest
+
+      // Check if the correct matrix was entered
+      if (toTest.equals(inverseMatrix) === true) {
+        correct = true
+      } else {
+        correct = false
+      }
 
       // Only play animation if it is not currently playing
       if (playing === false) {

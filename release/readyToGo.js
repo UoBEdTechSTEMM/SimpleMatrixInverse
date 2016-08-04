@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-var matrix = {};
+var correct = false;
 
 function initialize (interactiveMode) {
   jQuery.getScript('https://cdnjs.cloudflare.com/ajax/libs/two.js/0.6.0/two.min.js', run);
@@ -22,7 +22,7 @@ function getResponse () {
   to retrieve back student's response.*/
   /* Your code starts from here:*/
 
-  if (matrix.testAnswer() === true) {
+  if (correct === true) {
     return 1;
   } else {
     return 0;

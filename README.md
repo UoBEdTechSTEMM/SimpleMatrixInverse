@@ -16,7 +16,9 @@ Simplified version of [Matrix Transforms](https://github.com/UoBEdTechSTEMM/Matr
 
   * ~~Align text inputs on Maple TA HTML question~~
 
-  * Add grading code for the inverse matrix
+  * ~~Add grading code for the inverse matrix~~
+
+  * ~~Fix scrolling issue~~
 
 
 * ~~Test that inverse is correct~~
