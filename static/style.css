@@ -43,8 +43,7 @@ h2 {
 
 .matrixInput, .matrixOutput {
   font-family: "Monaco", "Inconsolata", monospace;
-  margin-left: 0.5em;
-  margin-right: 0.5em;
+  margin: 0.5em;
   width: 5em;
 }
 
@@ -69,9 +68,23 @@ h2 {
 
 .center {
   margin: auto;
-  width: 80%;
+  width: 100%;
   padding: 10px;
   text-align: center;
+}
+
+.matrixTable {
+  display: inline-table;
+  position: relative;
+  top: -1em;
+}
+
+.matrixRow {
+  display: table-row;
+}
+
+.matrixCell {
+  display: table-cell;
 }
 
 #canvasContainer {

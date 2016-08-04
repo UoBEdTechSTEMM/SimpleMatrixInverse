@@ -36,14 +36,18 @@
       </span>
 
       <span id="inverseMatrix">
-        <input type="text" id="matrixElemA"><input type="text" id="matrixElemB"> <br />
-        <input type="text" id="matrixElemC"><input type="text" id="matrixElemD">
-        <!-- \(
-        \begin{pmatrix}
-        \FormInput[][matrixInput][0]{matrixElemA} & \FormInput[][matrixInput][0]{matrixElemB} \\
-        \FormInput[][matrixInput][0]{matrixElemC} & \FormInput[][matrixInput][0]{matrixElemD}
-        \end{pmatrix}
-        \) -->
+        \(\Bigg( \)
+        <div class="matrixTable">
+          <div class="matrixRow">
+            <div class="matrixCell"><input type="text" class="matrixInput" id="matrixElemA"></div>
+            <div class="matrixCell"><input type="text" class="matrixInput" id="matrixElemB"></div>
+          </div>
+          <div class="matrixRow">
+            <div class="matrixCell"><input type="text" class="matrixInput" id="matrixElemC"></div>
+            <div class="matrixCell"><input type="text" class="matrixInput" id="matrixElemD"></div>
+          </div>
+        </div>
+        \(\Bigg) \)
       </span>
 
       <span id="resultingMatrix">
@@ -54,8 +58,6 @@
   <p>
     <input type="button" id="test" value="Test">
     <input type="button" id="debugInverse" value="DEBUG: Get Inverse">
-
-    <span id="result"></span>
   </p>
 
   <div id="canvasContainer"></div>
