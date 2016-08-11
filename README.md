@@ -12,6 +12,8 @@ Simplified version of [Matrix Transforms](https://github.com/UoBEdTechSTEMM/Matr
 
 ## TODO
 
+* Move from rawgit to using github pages
+
 * Maple TA HTML Question
 
   * ~~Align text inputs on Maple TA HTML question~~
